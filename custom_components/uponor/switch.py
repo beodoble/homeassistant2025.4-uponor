@@ -1,12 +1,12 @@
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
-
 from homeassistant.const import CONF_NAME
+
 from .const import (
     DOMAIN,
     SIGNAL_UPONOR_STATE_UPDATE,
-    DEVICE_MANUFACTURER
+    DEVICE_MANUFACTURER,
 )
 
 
@@ -27,7 +27,7 @@ class AwaySwitch(SwitchEntity):
 
     @property
     def name(self) -> str:
-        return self._name + " Away"
+        return f"{self._name} Away"
 
     @property
     def icon(self):
@@ -46,11 +46,12 @@ class AwaySwitch(SwitchEntity):
 
     async def async_turn_off(self, **kwargs):
         await self._state_proxy.async_set_away(False)
-    
+
     async def async_added_to_hass(self):
-        async_dispatcher_connect(
+        remove = async_dispatcher_connect(
             self.hass, SIGNAL_UPONOR_STATE_UPDATE, self._update_callback
         )
+        self.async_on_remove(remove)
 
     @callback
     def _update_callback(self):
@@ -58,7 +59,7 @@ class AwaySwitch(SwitchEntity):
 
     @property
     def unique_id(self):
-        return self.name
+        return f"{self._name}_away"
 
     @property
     def device_info(self):
@@ -77,7 +78,7 @@ class CoolSwitch(SwitchEntity):
 
     @property
     def name(self) -> str:
-        return self._name + " Cooling Mode"
+        return f"{self._name} Cooling Mode"
 
     @property
     def icon(self):
@@ -96,11 +97,12 @@ class CoolSwitch(SwitchEntity):
 
     async def async_turn_off(self, **kwargs):
         await self._state_proxy.async_switch_to_heating()
-    
+
     async def async_added_to_hass(self):
-        async_dispatcher_connect(
+        remove = async_dispatcher_connect(
             self.hass, SIGNAL_UPONOR_STATE_UPDATE, self._update_callback
         )
+        self.async_on_remove(remove)
 
     @callback
     def _update_callback(self):
@@ -108,7 +110,7 @@ class CoolSwitch(SwitchEntity):
 
     @property
     def unique_id(self):
-        return self.name
+        return f"{self._name}_cool"
 
     @property
     def device_info(self):
