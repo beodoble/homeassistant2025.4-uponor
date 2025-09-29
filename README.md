@@ -1,3 +1,5 @@
+My own update trying to solve the compatibility with Home Assistant >2025.4
+
 # homeassistant-uponor
 
 [![Buy me a smoothie](https://img.shields.io/badge/Buy%20me%20a-smoothie-blue?style=for-the-badge&logo=PAYPAL)](https://www.paypal.me/asev)
