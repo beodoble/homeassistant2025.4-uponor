@@ -1,4 +1,5 @@
 My own update trying to solve the compatibility with Home Assistant >2025.4
+Credit to: https://github.com/asev/homeassistant-uponor
 
 # homeassistant-uponor
 
